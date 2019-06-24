@@ -20,7 +20,7 @@
 	$LINEDatas['url'] = "https://api.line.me/v2/bot/message/reply";
   	$LINEDatas['token'] = "/5qKcInqTBGTrFAd52HnHFREKSsP2CHN07FK8036ALc7U5m6nmYJueTRYuMoAGoseez7KarRqVmm/0MByL+T81/fX1Ze7PLk12uaKfu2CqOigopGOB4QBZOIVG3CGoqVYvRACqqhZueFLmndOoWwzwdB04t89/1O/w1cDnyilFU=";
 
-  	$results = sentMessage($encodeJson,$LINEDatas);
+  	$results = sentMessage($encodeJson,$displayname,$LINEDatas);
 
 	/*Return HTTP Request 200*/
 	http_response_code(200);
@@ -34,7 +34,7 @@
 		return $datas;
 	}
 
-	function sentMessage($encodeJson,$displayname,$datas)
+	function sentMessage($encodeJson,$datas)
 	{
 		$datasReturn = [];
 		$curl = curl_init();
