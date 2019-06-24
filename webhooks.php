@@ -1,6 +1,7 @@
 <?php // callback.php
-//require "vendor/autoload.php";
+require "vendor/autoload.php";
 //require_once('vendor/linecorp/line-bot-sdk/line-bot-sdk-tiny/LINEBotTiny.php');
+require "profile.php";
 $access_token = '/5qKcInqTBGTrFAd52HnHFREKSsP2CHN07FK8036ALc7U5m6nmYJueTRYuMoAGoseez7KarRqVmm/0MByL+T81/fX1Ze7PLk12uaKfu2CqOigopGOB4QBZOIVG3CGoqVYvRACqqhZueFLmndOoWwzwdB04t89/1O/w1cDnyilFU=';
 $id = $arrayJson['events'][0]['source']['userId'];
 // Get POST body content
@@ -18,9 +19,11 @@ $text = $event['source']['$id'];
 // Get replyToken
 $replyToken = $event['replyToken'];
 // Build message to reply back
-$messages = 
-new TextMessageBuilder("คุณ ".$profile["displayName"]."\nเพศ: $genderemo ".$gendertext."\nเกิดวันที่ $bd"));
-
+$messages = [
+'type' => 'text',
+'text' => 'สวัสดีครับ',$id
+new TextMessageBuilder("คุณ ".$profile["displayName"]."\nเพศ: $genderemo ".$gendertext."\nเกิดวันที่ $bd"))
+];
 // Make a POST Request to Messaging API to reply to sender
 $url = 'https://api.line.me/v2/bot/message/reply';
 $data = [
