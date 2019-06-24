@@ -1,4 +1,4 @@
-<?php
+<?php 
 	/*Get Data From POST Http Request*/
 	$datas = file_get_contents('php://input');
 	/*Decode Json From LINE Data Body*/
@@ -7,16 +7,15 @@
 	file_put_contents('log.txt', file_get_contents('php://input') . PHP_EOL, FILE_APPEND);
 
 	$replyToken = $deCode['events'][0]['replyToken'];
-  $messages = [];
+
+	$messages = [];
 	$messages['replyToken'] = $replyToken;
 	$messages['messages'][0] = getFormatTextMessage("เอ้ย ถามอะไรก็ตอบได้");
 
-
 	$encodeJson = json_encode($messages);
 
-
-		$LINEDatas['url'] = "https://api.line.me/v2/bot/message/reply";
-  	$LINEDatas['token'] = "/5qKcInqTBGTrFAd52HnHFREKSsP2CHN07FK8036ALc7U5m6nmYJueTRYuMoAGoseez7KarRqVmm/0MByL+T81/fX1Ze7PLk12uaKfu2CqOigopGOB4QBZOIVG3CGoqVYvRACqqhZueFLmndOoWwzwdB04t89/1O/w1cDnyilFU=";
+	$LINEDatas['url'] = "https://api.line.me/v2/bot/message/reply";
+  	$LINEDatas['token'] = "WMOsQ/4hWzaWxHAtvHw7H36SYWtU2RLT87CeKZk674MrmfcenRwApr+/9BIL1HkuWI9h3e8aDuQ6siofBjQ/rVh49uQEpz8r5It/hnguWF2Vd91lEBWHyQaYuNDvEfkruzMBbLrTXK5cs9wvmKhR/1GUYhWQfeY8sLGRXgo3xvw=";
 
   	$results = sentMessage($encodeJson,$LINEDatas);
 
