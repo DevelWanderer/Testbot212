@@ -5,12 +5,11 @@
 	$deCode = json_decode($datas,true);
 
 	file_put_contents('log.txt', file_get_contents('php://input') . PHP_EOL, FILE_APPEND);
-
-	$replyToken = $deCode['events'][0]['replyToken'];
 	$res = $bot->getProfile($userId);
 	if ($res->isSucceeded()) {
 	$profile = $res->getJSONDecodedBody();
 	$displayName = $profile['displayName'];
+	$replyToken = $deCode['events'][0]['replyToken'];
 	}
 	$messages = [];
 	$messages['replyToken'] = $replyToken;
