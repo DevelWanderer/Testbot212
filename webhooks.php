@@ -3,11 +3,11 @@
 	$datas = file_get_contents('php://input');
 	/*Decode Json From LINE Data Body*/
 	$deCode = json_decode($datas,true);
-	
+
 	file_put_contents('log.txt', file_get_contents('php://input') . PHP_EOL, FILE_APPEND);
-	
+
 	$replyToken = $deCode['events'][0]['replyToken'];
-	}
+
 	$messages = [];
 	$messages['replyToken'] = $replyToken;
 	$messages['messages'][0] = getFormatTextMessage("เอ้ย ถามอะไรก็ตอบได้");
@@ -71,5 +71,4 @@
 
 		return $datasReturn;
 	}
-echo "OK";
 ?>
