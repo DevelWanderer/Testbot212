@@ -14,9 +14,10 @@
 	    echo $profile['pictureUrl'];
 	    echo $profile['statusMessage'];
 	}
-
+	$messages = [];
 	$messages['replyToken'] = $replyToken;
 	$messages['messages'][0] = getFormatTextMessage('สวัสดีครับ'+$profile['displayName']);
+	$encodeJson = json_encode($messages);	
 
 	/*$messages = [];
 	$messages['replyToken'] = $replyToken;
