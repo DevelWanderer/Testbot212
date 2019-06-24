@@ -5,39 +5,23 @@
 	$deCode = json_decode($datas,true);
 
 	file_put_contents('log.txt', file_get_contents('php://input') . PHP_EOL, FILE_APPEND);
-	/*$httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient('/5qKcInqTBGTrFAd52HnHFREKSsP2CHN07FK8036ALc7U5m6nmYJueTRYuMoAGoseez7KarRqVmm/0MByL+T81/fX1Ze7PLk12uaKfu2CqOigopGOB4QBZOIVG3CGoqVYvRACqqhZueFLmndOoWwzwdB04t89/1O/w1cDnyilFU=');
-	$bot = new \LINE\LINEBot($httpClient, ['channelSecret' => '1d07c3906c0ce7e7f7cf71b0f20e10bc']);*/
-	$replyToken = $deCode['events'][0]['replyToken'];
-	$res = $bot->getProfile('user-id');
-	if ($res->isSucceeded()) {
-  	  	$profile = $res->getJSONDecodedBody();
-    		$displayName = $profile['displayName'];
-    		$statusMessage = $profile['statusMessage'];
-    		$pictureUrl = $profile['pictureUrl'];
-	}
-	$messages = [];
-	$messages['replyToken'] = $replyToken;
-	$messages['messages'][0] = new TextMessageBuilder("สวัสดีครับคุณ".$displayName.);
-	$encodeJson = json_encode($messages);	
 
-	/*$messages = [];
-	$messages['replyToken'] = $replyToken;
-	$messages['messages'][0] = getFormatTextMessage("เอ้ย ถามอะไรก็ตอบได้"+$profile["displayName"]);
+	$replyToken = $deCode['events'][0]['replyToken'];
   $messages = [];
 	$messages['replyToken'] = $replyToken;
-	$messages['messages'][0] = getFormatTextMessage("ว่าจะได๋"+$profile["displayName"]);
-
-	$encodeJson = json_encode($messages);*/
+	$messages['messages'][0] = getFormatTextMessage("เอ้ย ถามอะไรก็ตอบได้");
 
 
-	$LINEDatas['url'] = "https://api.line.me/v2/bot/message/reply";
+	$encodeJson = json_encode($messages);
+
+
+		$LINEDatas['url'] = "https://api.line.me/v2/bot/message/reply";
   	$LINEDatas['token'] = "/5qKcInqTBGTrFAd52HnHFREKSsP2CHN07FK8036ALc7U5m6nmYJueTRYuMoAGoseez7KarRqVmm/0MByL+T81/fX1Ze7PLk12uaKfu2CqOigopGOB4QBZOIVG3CGoqVYvRACqqhZueFLmndOoWwzwdB04t89/1O/w1cDnyilFU=";
 
   	$results = sentMessage($encodeJson,$LINEDatas);
 
 	/*Return HTTP Request 200*/
 	http_response_code(200);
- 	 
 
 	function getFormatTextMessage($text)
 	{
@@ -88,5 +72,4 @@
 
 		return $datasReturn;
 	}
-echo "OK";
 ?>
