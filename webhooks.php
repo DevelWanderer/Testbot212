@@ -10,10 +10,10 @@
 
 	$messages = [];
 	$messages['replyToken'] = $replyToken;
-	$messages['messages'][0] = getFormatTextMessage("เอ้ย ถามอะไรก็ตอบได้");
+	$messages['messages'][0] = getFormatTextMessage("ควยไรนัท");
 	$messages = [];
 	$messages['replyToken'] = $replyToken;
-	$messages['messages'][0] = getFormatTextMessage("ว่าจะได๋");
+	$messages['messages'][0] = getFormatTextMessage("ว่าจะได๋"+$profile["displayName"]);
 
 	$encodeJson = json_encode($messages);
 
