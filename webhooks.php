@@ -17,7 +17,7 @@
 	}
 	$messages = [];
 	$messages['replyToken'] = $replyToken;
-	$messages['messages'][0] = getFormatTextMessage("สวัสดีครับ"+$displayName);
+	$messages['messages'][0] = new TextMessageBuilder("สวัสดีครับคุณ".$displayName.);
 	$encodeJson = json_encode($messages);	
 
 	/*$messages = [];
