@@ -3,10 +3,7 @@
 	$datas = file_get_contents('php://input');
 	/*Decode Json From LINE Data Body*/
 	$deCode = json_decode($datas,true);
-	$res = $bot->getProfile($userId);
-	if ($res->isSucceeded()) {
-	$profile = $res->getJSONDecodedBody();
-	$displayName = $profile['displayName'];
+	
 	file_put_contents('log.txt', file_get_contents('php://input') . PHP_EOL, FILE_APPEND);
 	
 	$replyToken = $deCode['events'][0]['replyToken'];
@@ -20,7 +17,7 @@
 	$LINEDatas['url'] = "https://api.line.me/v2/bot/message/reply";
   	$LINEDatas['token'] = "/5qKcInqTBGTrFAd52HnHFREKSsP2CHN07FK8036ALc7U5m6nmYJueTRYuMoAGoseez7KarRqVmm/0MByL+T81/fX1Ze7PLk12uaKfu2CqOigopGOB4QBZOIVG3CGoqVYvRACqqhZueFLmndOoWwzwdB04t89/1O/w1cDnyilFU=";
 
-  	$results = sentMessage($encodeJson,$LINEDatas,$displayName);
+  	$results = sentMessage($encodeJson,$LINEDatas);
 
 	/*Return HTTP Request 200*/
 	http_response_code(200);
