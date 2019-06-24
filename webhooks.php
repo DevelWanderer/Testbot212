@@ -9,6 +9,6 @@ if ($response->isSucceeded()) {
     echo 'Succeeded!';
     return;
 }
-
+http_response_code(200);
 // Failed
 echo $response->getHTTPStatus() . ' ' . $response->getRawBody();
