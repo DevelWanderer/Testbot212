@@ -8,13 +8,13 @@
 	$httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient('/5qKcInqTBGTrFAd52HnHFREKSsP2CHN07FK8036ALc7U5m6nmYJueTRYuMoAGoseez7KarRqVmm/0MByL+T81/fX1Ze7PLk12uaKfu2CqOigopGOB4QBZOIVG3CGoqVYvRACqqhZueFLmndOoWwzwdB04t89/1O/w1cDnyilFU=');
 	$bot = new \LINE\LINEBot($httpClient, ['channelSecret' => '1d07c3906c0ce7e7f7cf71b0f20e10bc']);
 	$replyToken = $deCode['events'][0]['replyToken'];
-	/*$res = $bot->getProfile('user-id');
+	$res = $bot->getProfile('user-id');
 	if ($res->isSucceeded()) {
   	  	$profile = $res->getJSONDecodedBody();
     		$displayName = $profile['displayName'];
     		$statusMessage = $profile['statusMessage'];
     		$pictureUrl = $profile['pictureUrl'];
-	}*/
+	}
 	$messages = [];
 	$messages['replyToken'] = $replyToken;
 	$messages['messages'][0] = new TextMessageBuilder("สวัสดีครับคุณ".$displayName.);
@@ -37,6 +37,7 @@
 
 	/*Return HTTP Request 200*/
 	http_response_code(200);
+ 	header('HTTP/1.1 200 OK'); 
 
 	function getFormatTextMessage($text)
 	{
