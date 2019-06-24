@@ -7,10 +7,14 @@
 	file_put_contents('log.txt', file_get_contents('php://input') . PHP_EOL, FILE_APPEND);
 
 	$replyToken = $deCode['events'][0]['replyToken'];
-
+	$res = $bot->getProfile($userId);
+	if ($res->isSucceeded()) {
+	$profile = $res->getJSONDecodedBody();
+	$displayName = $profile['displayName'];
+	}
 	$messages = [];
 	$messages['replyToken'] = $replyToken;
-	$messages['messages'][0] = getFormatTextMessage("เอ้ย ถามอะไรก็ตอบได้");
+	$messages['messages'][0] = getFormatTextMessage("เอ้ย ถามอะไรก็ตอบได้"$displayName);
 
 	$encodeJson = json_encode($messages);
 
