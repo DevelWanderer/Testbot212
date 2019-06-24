@@ -8,15 +8,16 @@
 	$httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient('/5qKcInqTBGTrFAd52HnHFREKSsP2CHN07FK8036ALc7U5m6nmYJueTRYuMoAGoseez7KarRqVmm/0MByL+T81/fX1Ze7PLk12uaKfu2CqOigopGOB4QBZOIVG3CGoqVYvRACqqhZueFLmndOoWwzwdB04t89/1O/w1cDnyilFU=');
 	$bot = new \LINE\LINEBot($httpClient, ['channelSecret' => '1d07c3906c0ce7e7f7cf71b0f20e10bc']);
 	$replyToken = $deCode['events'][0]['replyToken'];
-	if ($response->isSucceeded()) {
-	    $profile = $response->getJSONDecodedBody();
-	    echo $profile['displayName'];
-	    echo $profile['pictureUrl'];
-	    echo $profile['statusMessage'];
+	$res = $bot->getProfile('user-id');
+	if ($res->isSucceeded()) {
+  	  	$profile = $res->getJSONDecodedBody();
+    		$displayName = $profile['displayName'];
+    		$statusMessage = $profile['statusMessage'];
+    		$pictureUrl = $profile['pictureUrl'];
 	}
 	$messages = [];
 	$messages['replyToken'] = $replyToken;
-	$messages['messages'][0] = getFormatTextMessage('สวัสดีครับ'+$profile['displayName']);
+	$messages['messages'][0] = getFormatTextMessage("สวัสดีครับ"+$displayName);
 	$encodeJson = json_encode($messages);	
 
 	/*$messages = [];
@@ -29,7 +30,7 @@
 	$encodeJson = json_encode($messages);*/
 
 
-		$LINEDatas['url'] = "https://api.line.me/v2/bot/message/reply";
+	$LINEDatas['url'] = "https://api.line.me/v2/bot/message/reply";
   	$LINEDatas['token'] = "/5qKcInqTBGTrFAd52HnHFREKSsP2CHN07FK8036ALc7U5m6nmYJueTRYuMoAGoseez7KarRqVmm/0MByL+T81/fX1Ze7PLk12uaKfu2CqOigopGOB4QBZOIVG3CGoqVYvRACqqhZueFLmndOoWwzwdB04t89/1O/w1cDnyilFU=";
 
   	$results = sentMessage($encodeJson,$LINEDatas);
