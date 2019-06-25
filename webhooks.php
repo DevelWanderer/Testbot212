@@ -12,6 +12,7 @@ if(!is_null($events)){
     // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
     $replyToken = $events['events'][0]['replyToken'];
 }
+http_response_code(200);
 $textMessageBuilder = new TextMessageBuilder(json_encode($events));
 $response = $bot->replyMessage($replyToken,$textMessageBuilder);
 if ($response->isSucceeded()) {
@@ -21,7 +22,7 @@ if ($response->isSucceeded()) {
  
 // Failed
 echo $response->getHTTPStatus() . ' ' . $response->getRawBody();
-http_response_code(200);
+
 ?>
 
 
