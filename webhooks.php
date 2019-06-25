@@ -5,34 +5,17 @@
 	$deCode = json_decode($datas,true);
 
 	file_put_contents('log.txt', file_get_contents('php://input') . PHP_EOL, FILE_APPEND);
-	$replyToken = $deCode['events'][0]['replyToken'];
-	//$events = json_decode($content, true);
-// Validate parsed JSON data
-	if (!is_null($events['events'])) {
-// Loop through each event
-	foreach ($events['events'] as $event) {
-// Reply only when message sent is in 'text' format
-	if ($event['type'] == 'message' && $event['message']['type'] == 'text') {
-// Get text sent
-	$text = $event['source']['userId'];
-// Get replyToken
-	$replyToken = $event['replyToken'];
-// Build message to reply back
-	$messages = [
-		'type' => 'text',
-		'text' => $text
-	];
-// Make a POST Request to Messaging API to reply to sender
-$url = 'https://api.line.me/v2/bot/message/reply';
-$data = [
-'replyToken' => $replyToken,
-'messages' => [$messages],
-];
-$post = json_encode($data);
 
-		$LINEDatas['url'] = "https://api.line.me/v2/bot/message/reply";
+	$replyToken = $deCode['events'][0]['replyToken'];
+	$messages = [];
+	$messages['replyToken'] = $replyToken;
+	$messages['messages'][0] = getFormatTextMessage("เอ้ย ถามอะไรก็ตอบได้");
+
+	$encodeJson = json_encode($messages);
+
+	$LINEDatas['url'] = "https://api.line.me/v2/bot/message/reply";
   	$LINEDatas['token'] = "/5qKcInqTBGTrFAd52HnHFREKSsP2CHN07FK8036ALc7U5m6nmYJueTRYuMoAGoseez7KarRqVmm/0MByL+T81/fX1Ze7PLk12uaKfu2CqOigopGOB4QBZOIVG3CGoqVYvRACqqhZueFLmndOoWwzwdB04t89/1O/w1cDnyilFU=";
-		$LINEprofile['profile'] ="https://api.line.me/v2/bot/profile/{userId}"
+
   	$results = sentMessage($encodeJson,$LINEDatas);
 
 	/*Return HTTP Request 200*/
@@ -42,7 +25,7 @@ $post = json_encode($data);
 	{
 		$datas = [];
 		$datas['type'] = 'text';
-		$datas['text'] = $text;
+		$datas['text'] = $userId;
 
 		return $datas;
 	}
