@@ -54,6 +54,7 @@ if ($response->isSucceeded()) {
       }
       $replyData = new TextMessageBuilder($textReplyMessage);                                                 
       break;   
+    http_response_code(200);
 $response = $bot->replyMessage($replyToken,$replyData);
 if ($response->isSucceeded()) {
       echo 'Succeeded!';
@@ -61,5 +62,5 @@ if ($response->isSucceeded()) {
       }
       // Failed
       echo $response->getHTTPStatus() . ' ' . $response->getRawBody();
-  http_response_code(200);
+  
       ?> 
