@@ -10,5 +10,5 @@ $myfile = fopen(“log$date.txt”, “a”) or die(“Unable to open file!”);
 $log = $date.”-”.$time.”\t”.$userId.”\t”.$queryText.”\n”;
 fwrite($myfile,$log);
 fclose($myfile);
-
+http_response_code(200);
 ?>
