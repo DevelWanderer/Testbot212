@@ -1,66 +1,32 @@
 <?php
-require "vendor/autoload.php";
-require_once 'botpush.php';
+/// การตั้งค่าเกี่ยวกับ bot ใน LINE Messaging API
+define('LINE_MESSAGE_CHANNEL_ID','1590205061');
+define('LINE_MESSAGE_CHANNEL_SECRET','1d07c3906c0ce7e7f7cf71b0f20e10bc');
+define('LINE_MESSAGE_ACCESS_TOKEN','/5qKcInqTBGTrFAd52HnHFREKSsP2CHN07FK8036ALc7U5m6nmYJueTRYuMoAGoseez7KarRqVmm/0MByL+T81/fX1Ze7PLk12uaKfu2CqOigopGOB4QBZOIVG3CGoqVYvRACqqhZueFLmndOoWwzwdB04t89/1O/w1cDnyilFU=');
+require_once '../vendor/autoload.php';
 $httpClient = new CurlHTTPClient(LINE_MESSAGE_ACCESS_TOKEN);
 $bot = new LINEBot($httpClient, array('channelSecret' => LINE_MESSAGE_CHANNEL_SECRET));
 $content = file_get_contents('php://input');
-$hash = hash_hmac('sha256', $content, LINE_MESSAGE_CHANNEL_SECRET, true);
-$signature = base64_encode($hash);
-$events = $bot->parseEventRequest($content, $signature);
-$eventObj = $events[0]; // Event Object ของ array แรก
-$eventType = $eventObj->getType();
-$userId = NULL;
-$groupId = NULL;
-$roomId = NULL;
-$sourceId = NULL;
-$sourceType = NULL;
-// สร้างตัวแปร replyToken และ replyData สำหรับกรณีใช้ตอบกลับข้อความ
-$replyToken = NULL;
-$replyData = NULL;
-// สร้างตัวแปร ไว้เก็บค่าว่าเป้น Event ประเภทไหน
-$eventMessage = NULL;
-$eventPostback = NULL;
-$eventJoin = NULL;
-$eventLeave = NULL;
-$eventFollow = NULL;
-$eventUnfollow = NULL;
-$eventBeacon = NULL;
-$eventAccountLink = NULL;
-$eventMemberJoined = NULL;
-$eventMemberLeft = NULL;
-switch($eventType){
-    case 'message': $eventMessage = true; break;    
-    case 'postback': $eventPostback = true; break;  
-    case 'join': $eventJoin = true; break;  
-    case 'leave': $eventLeave = true; break;    
-    case 'follow': $eventFollow = true; break;  
-    case 'unfollow': $eventUnfollow = true; break;  
-    case 'beacon': $eventBeacon = true; break;     
-    case 'accountLink': $eventAccountLink = true; break;       
-    case 'memberJoined': $eventMemberJoined = true; break;       
-    case 'memberLeft': $eventMemberLeft = true; break;     
-if($eventObj->isUserEvent()){
-        $userId = $eventObj->getUserId();  
-        $sourceType = "USER";
+$events = json_decode($content, true);
+if(!is_null($events)){
+    // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
+    $replyToken = $events['events'][0]['replyToken'];
+}
+$textMessageBuilder = new TextMessageBuilder(json_encode($events));
+$response = $bot->replyMessage($replyToken,$textMessageBuilder);
 if ($response->isSucceeded()) {
-        $userData = $response->getJSONDecodedBody(); // return array     
-        // $userData['userId']
-        // $userData['displayName']
-        // $userData['pictureUrl']
-        // $userData['statusMessage']
-      $textReplyMessage = 'สวัสดีครับ คุณ '.$userData['displayName'];     
-      }else{
-      $textReplyMessage = 'สวัสดีครับ คุณคือใคร';
-      }
-      $replyData = new TextMessageBuilder($textReplyMessage);                                                 
-      break;   
-    http_response_code(200);
-$response = $bot->replyMessage($replyToken,$replyData);
-if ($response->isSucceeded()) {
-      echo 'Succeeded!';
-      return;
-      }
-      // Failed
-      echo $response->getHTTPStatus() . ' ' . $response->getRawBody();
-  
-      ?> 
+    echo 'Succeeded!';
+    return;
+}
+ 
+// Failed
+echo $response->getHTTPStatus() . ' ' . $response->getRawBody();
+?>
+
+
+
+
+
+
+
+?>
