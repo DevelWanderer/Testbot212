@@ -9,7 +9,7 @@
 	$replyToken = $deCode['events'][0]['replyToken'];
 	$messages = [];
 	$messages['replyToken'] = $replyToken;
-	$messages['messages'][0] = getFormatTextMessage("เอ้ย ถามอะไรก็ตอบได้");
+	$messages['messages'][0] = getFormatTextMessage('$userId');
 
 	$encodeJson = json_encode($messages);
 
