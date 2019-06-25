@@ -1,11 +1,37 @@
-
 <?php
-require "vendor/autoload.php";
-$access_token = '/5qKcInqTBGTrFAd52HnHFREKSsP2CHN07FK8036ALc7U5m6nmYJueTRYuMoAGoseez7KarRqVmm/0MByL+T81/fX1Ze7PLk12uaKfu2CqOigopGOB4QBZOIVG3CGoqVYvRACqqhZueFLmndOoWwzwdB04t89/1O/w1cDnyilFU=';
-$channelSecret = '1d07c3906c0ce7e7f7cf71b0f20e10bc';
-$pushID = 'U247e07dbd7112244b44c934915d5aceb';
-$httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient($access_token);
-$bot = new \LINE\LINEBot($httpClient, ['channelSecret' => $channelSecret]);
-$textMessageBuilder = new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('hello world');
-$response = $bot->pushMessage($pushID, $textMessageBuilder);
-echo $response->getHTTPStatus() . ' ' . $response->getRawBody();
+// คำสั่งรอรับการส่งค่ามาของ LINE Messaging API
+$content = file_get_contents('php://input');
+
+// แปลงข้อความรูปแบบ JSON  ให้อยู่ในโครงสร้างตัวแปร array
+$events = json_decode($content, true);
+if(!is_null($events)){
+    // ถ้ามีค่า สร้างตัวแปรเก็บ replyToken ไว้ใช้งาน
+    $replyToken = $events['events'][0]['replyToken'];
+    $userID = $events['events'][0]['source']['userId'];
+    $sourceType = $events['events'][0]['source']['type'];
+    $is_postback = NULL;
+    $is_message = NULL;
+    if(isset($events['events'][0]) && array_key_exists('message',$events['events'][0])){
+        $is_message = true;
+        $typeMessage = $events['events'][0]['message']['type'];
+        $userMessage = $events['events'][0]['message']['text'];
+        $idMessage = $events['events'][0]['message']['id'];
+    }
+    if(isset($events['events'][0]) && array_key_exists('postback',$events['events'][0])){
+        $is_postback = true;
+        $dataPostback = NULL;
+        parse_str($events['events'][0]['postback']['data'],$dataPostback);;
+        $paramPostback = NULL;
+        if(array_key_exists('params',$events['events'][0]['postback'])){
+            if(array_key_exists('date',$events['events'][0]['postback']['params'])){
+                $paramPostback = $events['events'][0]['postback']['params']['date'];
+            }
+            if(array_key_exists('time',$events['events'][0]['postback']['params'])){
+                $paramPostback = $events['events'][0]['postback']['params']['time'];
+            }
+            if(array_key_exists('datetime',$events['events'][0]['postback']['params'])){
+                $paramPostback = $events['events'][0]['postback']['params']['datetime'];
+            }
+        }
+    }
+}
