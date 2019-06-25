@@ -35,3 +35,4 @@ if(!is_null($events)){
         }
     }
 }
+http_response_code(200);
