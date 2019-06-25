@@ -5,7 +5,7 @@
 	$deCode = json_decode($datas,true);
 
 	file_put_contents('log.txt', file_get_contents('php://input') . PHP_EOL, FILE_APPEND);
-	$replyToken = $deCode['events'][0]['replyToken'];
+	//$replyToken = $deCode['events'][0]['replyToken'];
 	$events = json_decode($content, true);
 // Validate parsed JSON data
 	if (!is_null($events['events'])) {
